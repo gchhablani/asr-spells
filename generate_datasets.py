@@ -55,19 +55,9 @@ def map_to_pred(batch):
     with open('t5-dataset.json', 'a+') as outfile:
         for el in range(len(transcription)):
             if(wer(transcription[el], batch['text'][el]) < 0.4):
-                entry = {"translation": {"transcribed": transcription[el], "corrected": batch['text'][el], "wer": wer(transcription[el], batch['text'][el])}}
+                entry = {"translation": {"transcribed": transcription[el], "corrected": batch['text'][el]}}
                 json.dump(entry, outfile)
                 outfile.write('\n')
-
-    with open('neuspell-correct-dataset.txt', 'a+') as outfile:
-        for el in range(len(transcription)):
-            if(wer(transcription[el], batch['text'][el]) < 0.4 and wer(transcription[el], batch['text'][el]) > 0):
-                outfile.write(batch['text'][el] + '\n')
-
-    with open('neuspell-wrong-dataset.txt', 'a+') as outfile:
-        for el in range(len(transcription)):
-            if(wer(transcription[el], batch['text'][el]) < 0.4 and wer(transcription[el], batch['text'][el]) > 0):
-                outfile.write(transcription[el] + '\n')
 
     batch["transcription"] = transcription
     return batch
