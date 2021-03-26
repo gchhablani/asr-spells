@@ -1,4 +1,3 @@
 transformers
 torch
 datasets
-git+https://github.com/neuspell/neuspell
